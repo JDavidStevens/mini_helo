@@ -9,9 +9,15 @@ import {updateUsername,updatePicture} from '../../ducks/reducer';
 
 
 
-export function Nav(){
+export function Nav(props){
+
+    
+    
     return(
         <div className="nav">
+        {console.log("property", props)}
+        <img src={props.picture} alt=''/>
+        <h2>{props.username}</h2>
            <Link to='/dashboard'><img src={home} alt=''/></Link>
            <Link to='/new'><img src={form} alt=''/></Link>
            <Link to='/'><img src={shutDown} alt=''/></Link>

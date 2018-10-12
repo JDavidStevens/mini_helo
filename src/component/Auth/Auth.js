@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
-import {updateUsername,updatePassword} from '../../ducks/reducer';
+import {updateUsername,updatePassword,updatePicture} from '../../ducks/reducer';
 
 
 
@@ -29,15 +29,21 @@ handlePassword(value){
 login(){
 
   let {username,password}=this.state;
-  axios.post('/api/auth/login',{username, password})
+  axios.post('/api/auth/login',{username: username, password: password})
   .then(response=>{
-    this.props.history.push("/dashboard")
+
+    this.props.updateUsername(response.data[0].username)
+    this.props.updatePassword(response.data[0].password)
+    this.props.updatePicture(response.data[0].profile_pic)
+    // console.log("password",response.data[0].username)
+    this.props.history.push("/dashboard");
   }).catch(()=>this.props.history.push('/'))
 }
 
 register(){
   let {username,password}=this.state;
   axios.post('/api/auth/register',{username, password})
+  // console.log("auth",username);
   .then(response=>{
     this.props.history.push("/dashboard")
   }).catch(()=>this.props.history.push('/'))
@@ -63,15 +69,9 @@ register(){
   }
 }
 
-function mapStateToProps(state){
-  const {username,password}=state
-return{
-   username,
-   password
-}
-}
+
 
 export default connect(
-  mapStateToProps,{updateUsername, updatePassword}
+  null, {updateUsername, updatePassword, updatePicture}
 
 )(Auth)

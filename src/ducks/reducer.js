@@ -1,15 +1,19 @@
 const initialState={
+    user:'',
     username:'',
     password:'',
     picture:''
 }
 
+const UPDATE_USER_DATA="UPDATE_USER_DATA";
 const UPDATE_USERNAME="UPDATE_USERNAME";
 const UPDATE_PASSWORD="UPDATE_PASSWORD";
 const UPDATE_PICTURE="UPDATE_PICTURE";
 
 function reducer(state=initialState, action){
     switch(action.type){
+        case UPDATE_USER_DATA:
+        return Object.assign({},state,{user:action.payload})
         case UPDATE_USERNAME:
         return Object.assign({},state,{username:action.payload})
         case UPDATE_PASSWORD:
@@ -22,6 +26,13 @@ function reducer(state=initialState, action){
 }
 
 /////Action Builders/Creators/////
+export function updateUserData(user){
+    return {
+        type: UPDATE_USER_DATA,
+        payload: user
+    }
+}
+
 export function updateUsername(username){
     return{
         type: UPDATE_USERNAME,
